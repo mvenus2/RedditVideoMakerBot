@@ -178,7 +178,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                 # zoom the body of the page
                 page.evaluate("document.body.style.zoom=" + str(zoom))
                 # as zooming the body doesn't change the properties of the divs, we need to adjust for the zoom
-                location = page.locator('[data-test-id="post-content"]').bounding_box()
+                location = page.locator('shreddit-post').bounding_box()
                 for i in location:
                     location[i] = float("{:.2f}".format(location[i] * zoom))
                 page.screenshot(clip=location, path=postcontentpath)
@@ -186,6 +186,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                 page.locator('h1[slot="title"]').screenshot(path=postcontentpath)
         except Exception as e:
             print_substep("Something went wrong!", style="red")
+            print_substep(e, style="red")
             resp = input(
                 "Something went wrong with making the screenshots! Do you want to skip the post? (y/n) "
             )
@@ -237,22 +238,38 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                     )
                 try:
                     if settings.config["settings"]["zoom"] != 1:
-                        # click on button to close replies so that they are not shown in the video
-                        page.locator("button[aria-controls=\"comment-children\"]").first.click()
-                        # store zoom settings
+                       if settings.config["settings"]["zoom"] != 1:
+                        # Store zoom settings
                         zoom = settings.config["settings"]["zoom"]
-                        # zoom the body of the page
-                        page.evaluate("document.body.style.zoom=" + str(zoom))
-                        # scroll comment into view
-                        page.locator(f"#t1_{comment['comment_id']}").scroll_into_view_if_needed()
-                        # as zooming the body doesn't change the properties of the divs, we need to adjust for the zoom
-                        location = page.locator(f"shreddit-comment[thingid=\"t1_{comment['comment_id']}\"]").bounding_box()
-                        for i in location:
-                            location[i] = float("{:.2f}".format(location[i] * zoom))
-                        page.screenshot(
-                            clip=location,
-                            path=f"assets/temp/{reddit_id}/png/comment_{idx}.png",
-                        )
+
+                        # Zoom the body of the page
+                        page.evaluate(f"document.body.style.zoom = {zoom}")
+
+                        # Scroll the parent of the comment into view
+                        parent_locator = page.locator(f"#t1_{comment['comment_id']}-comment-rtjson-content").locator('xpath=..')
+                        parent_locator.scroll_into_view_if_needed()
+
+                        # Get the bounding box of the parent element
+                        location = parent_locator.bounding_box()
+
+                        # Ensure bounding box is valid
+                        if location:
+                            # Adjust for zoom (since zooming doesn't change the div's actual properties)
+                            location['x'] = float("{:.2f}".format(location['x'] * zoom))
+                            location['y'] = float("{:.2f}".format(location['y'] * zoom))
+                            location['width'] = float("{:.2f}".format(location['width'] * zoom))
+                            location['height'] = float("{:.2f}".format(location['height'] * zoom))
+
+                            # Adjust the height to be exactly 200px
+                            #location['height'] = 200
+
+                            # Take a screenshot of the parent element with the adjusted height
+                            page.screenshot(
+                                clip=location,
+                                path=f"assets/temp/{reddit_id}/png/comment_{idx}.png",
+                            )
+                        else:
+                            print("Could not get the bounding box of the parent element.")
                     else:
                         # click on button to close replies so that they are not shown in the video
                         time.sleep(1)
