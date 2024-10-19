@@ -11,6 +11,7 @@ class AzureTTS:
         self.region = settings.config["settings"]["tts"]["azure_region"]
         self.default_voice = settings.config["settings"]["tts"]["azure_voice_name"]
         self.rate = settings.config["settings"]["tts"]["azure_voice_speed_boost"]
+        self.max_chars = 3000
 
     def run(self, text: str, filepath: str, random_voice=False):
         # Validate API key and region
