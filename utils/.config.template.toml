@@ -34,7 +34,7 @@ zoom = { optional = true, default = 1, example = 1.1, explanation = "Sets the br
 channel_name = { optional = true, default = "Reddit Tales", example = "Reddit Stories", explanation = "Sets the channel name for the video" }
 
 [settings.background]
-background_video = { optional = true, default = "minecraft", example = "rocket-league", options = ["minecraft", "gta", "rocket-league", "motor-gta", "csgo-surf", "cluster-truck", "minecraft-2","multiversus","fall-guys","steep", ""], explanation = "Sets the background for the video based on game name" }
+background_video = { optional = true, default = "minecraft", example = "rocket-league", options = ["satisfying", "satisfying2", "minecraft", "gta", "rocket-league", "motor-gta", "csgo-surf", "cluster-truck", "minecraft-2","multiversus","fall-guys","steep", ""], explanation = "Sets the background for the video based on game name" }
 background_audio = { optional = true, default = "lofi", example = "chill-summer", options = ["lofi","lofi-2","chill-summer",""], explanation = "Sets the background audio for the video" }
 background_audio_volume = { optional = true, type = "float", nmin = 0, nmax = 1, default = 0.15, example = 0.05, explanation="Sets the volume of the background audio. If you don't want background audio, set it to 0.", oob_error = "The volume HAS to be between 0 and 1", input_error = "The volume HAS to be a float number between 0 and 1"}
 enable_extra_audio = { optional = true, type = "bool", default = false, example = false, explanation="Used if you want to render another video without background audio in a separate folder", input_error = "The value HAS to be true or false"}
@@ -58,5 +58,4 @@ silence_duration = { optional = true, example = "0.1", explanation = "Time in se
 no_emojis = { optional = false, type = "bool", default = false, example = false, options = [true, false,], explanation = "Whether to remove emojis from the comments" }
 azure_api_key = { optional = true, example = "fb37d9e152864e1d8992a70154cf3bba", explanation = "Azure Speech service API key" }
 azure_region = { optional = true, default = "westus2", example = "westus2", explanation = "Azure region" }
-azure_voice_name = { optional = false, default = "en-US-AvaMultilingualNeural", options = ["en-US-AndrewMultilingualNeural", "en-US-AvaMultilingualNeural", "de-DE-FlorianMultilingualNeural", "en-US-EmmaMultilingualNeural", "de-DE-SeraphinaMultilingualNeural", "de-DE-FlorianMultilingualNeural", "fr-FR-VivienneMultilingualNeural", "fr-FR-RemyMultilingualNeural", "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-XiaochenMultilingualNeural", "zh-CN-XiaoyuMultilingualNeural", "zh-CN-YunyiMultilingualNeural"], example = "en-US-AvaMultilingualNeural", explanation = "Azure voice name" }
 azure_voice_speed_boost = { optional = false, default = 0, example = 50, explanation = "Azuretts voice speed boost (in %). Has to be a number between 0 and 100" }

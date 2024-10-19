@@ -1,6 +1,7 @@
 import json
 import re
 from pathlib import Path
+import time
 from typing import Dict, Final
 
 import translators
@@ -34,7 +35,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
     # ! Make sure the reddit screenshots folder exists
     Path(f"assets/temp/{reddit_id}/png").mkdir(parents=True, exist_ok=True)
 
-    # set the theme and turn off non-essential cookies
+    # set the theme and disable non-essential cookies
     if settings.config["settings"]["theme"] == "dark":
         cookie_file = open("./video_creation/data/cookie-dark-mode.json", encoding="utf-8")
         bgcolor = (33, 33, 36, 255)
@@ -60,6 +61,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
         transparent = False
 
     if storymode and settings.config["settings"]["storymodemethod"] == 1:
+        # for idx,item in enumerate(reddit_object["thread_post"]):
         print_substep("Generating images...")
         return imagemaker(
             theme=bgcolor,
@@ -181,7 +183,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                     location[i] = float("{:.2f}".format(location[i] * zoom))
                 page.screenshot(clip=location, path=postcontentpath)
             else:
-                page.locator('[data-test-id="post-content"]').screenshot(path=postcontentpath)
+                page.locator('h1[slot="title"]').screenshot(path=postcontentpath)
         except Exception as e:
             print_substep("Something went wrong!", style="red")
             resp = input(
@@ -230,11 +232,13 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                         to_language=settings.config["reddit"]["thread"]["post_lang"],
                     )
                     page.evaluate(
-                        '([tl_content, tl_id]) => document.querySelector(`#t1_${tl_id} > div:nth-child(2) > div > div[data-testid="comment"] > div`).textContent = tl_content',
-                        [comment_tl, comment["comment_id"]],
+                        '([tl_content, tl_id]) => document.querySelector(`#t1_${tl_id}-comment-rtjson-content p`).textContent = tl_content',
+                        [comment_tl, comment["comment_id"]]
                     )
                 try:
                     if settings.config["settings"]["zoom"] != 1:
+                        # click on button to close replies so that they are not shown in the video
+                        page.locator("button[aria-controls=\"comment-children\"]").first.click()
                         # store zoom settings
                         zoom = settings.config["settings"]["zoom"]
                         # zoom the body of the page
@@ -242,7 +246,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                         # scroll comment into view
                         page.locator(f"#t1_{comment['comment_id']}").scroll_into_view_if_needed()
                         # as zooming the body doesn't change the properties of the divs, we need to adjust for the zoom
-                        location = page.locator(f"#t1_{comment['comment_id']}").bounding_box()
+                        location = page.locator(f"shreddit-comment[thingid=\"t1_{comment['comment_id']}\"]").bounding_box()
                         for i in location:
                             location[i] = float("{:.2f}".format(location[i] * zoom))
                         page.screenshot(
@@ -250,7 +254,11 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                             path=f"assets/temp/{reddit_id}/png/comment_{idx}.png",
                         )
                     else:
-                        page.locator(f"#t1_{comment['comment_id']}").screenshot(
+                        # click on button to close replies so that they are not shown in the video
+                        time.sleep(1)
+                        if page.locator("button[aria-controls=\"comment-children\"]").first.count() > 0:
+                            page.locator("button[aria-controls=\"comment-children\"]").first.click()
+                        page.locator(f"shreddit-comment[thingid=\"t1_{comment['comment_id']}\"]").screenshot(
                             path=f"assets/temp/{reddit_id}/png/comment_{idx}.png"
                         )
                 except TimeoutError:
