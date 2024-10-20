@@ -8,6 +8,7 @@ from typing import Dict, NoReturn
 
 from prawcore import ResponseException
 
+from elevenLabsKeyRotator import APIKeyRotator
 from reddit.subreddit import get_subreddit_threads
 from utils import settings
 from utils.cleanup import cleanup
@@ -62,6 +63,11 @@ def main(POST_ID=None) -> None:
     download_background_audio(bg_config["audio"])
     chop_background(bg_config, length, reddit_object)
     make_final_video(number_of_comments, length, reddit_object, bg_config)
+
+    # rotate api key
+    if settings.config["settings"]["tts"]["voice_choice"] == "elevenlabs":
+        rotator = APIKeyRotator()
+        rotator.run()
 
 
 def run_many(times) -> None:
