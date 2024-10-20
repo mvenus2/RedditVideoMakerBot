@@ -52,6 +52,10 @@ def main(POST_ID=None) -> None:
     reddit_object = get_subreddit_threads(POST_ID)
     reddit_id = extract_id(reddit_object)
     print_substep(f"Thread ID is {reddit_id}", style="bold blue")
+    # rotate api key
+    if settings.config["settings"]["tts"]["voice_choice"] == "elevenlabs":
+        rotator = APIKeyRotator()
+        rotator.run()
     length, number_of_comments = save_text_to_mp3(reddit_object)
     length = math.ceil(length)
     get_screenshots_of_reddit_posts(reddit_object, number_of_comments)
@@ -64,10 +68,6 @@ def main(POST_ID=None) -> None:
     chop_background(bg_config, length, reddit_object)
     make_final_video(number_of_comments, length, reddit_object, bg_config)
 
-    # rotate api key
-    if settings.config["settings"]["tts"]["voice_choice"] == "elevenlabs":
-        rotator = APIKeyRotator()
-        rotator.run()
 
 
 def run_many(times) -> None:

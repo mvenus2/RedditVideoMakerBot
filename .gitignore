@@ -247,3 +247,4 @@ video_creation/data/envvars.txt
 config.toml
 *.exe
 api_keys.json
+execution_count.txt
