@@ -254,7 +254,7 @@ def make_final_video(
     print_step("Removing temporary files 🗑")
     cleanups = cleanup(reddit_id)
     print_substep(f"Removed {cleanups} temporary files 🗑")
-    print_step("Done! 🎉 The video is in the results folder 📁")
+    return video_path
 
 
 def initial_setup(reddit_obj: dict):
@@ -374,19 +374,38 @@ def overlay_images_on_background(
                 )
                 current_time += audio_clips_durations[i]
         elif settings.config["settings"]["storymodemethod"] == 1:
-            for i in track(range(0, number_of_clips + 1), "Collecting the image files..."):
-                image_clips.append(
-                    ffmpeg.input(f"assets/temp/{reddit_id}/png/img{i}.png")["v"].filter(
-                        "scale", screenshot_width, -1
+            if settings.config["settings"]["storymodemethod_cap_cut"] == False:
+                for i in track(range(0, number_of_clips + 1), "Collecting the image files..."):
+                    image_clips.append(
+                        ffmpeg.input(f"assets/temp/{reddit_id}/png/img{i}.png")["v"].filter(
+                            "scale", screenshot_width, -1
+                        )
                     )
-                )
-                background_clip = background_clip.overlay(
-                    image_clips[i],
-                    enable=f"between(t,{current_time},{current_time + audio_clips_durations[i]})",
-                    x="(main_w-overlay_w)/2",
-                    y="(main_h-overlay_h)/2",
-                )
-                current_time += audio_clips_durations[i]
+                    background_clip = background_clip.overlay(
+                        image_clips[i],
+                        enable=f"between(t,{current_time},{current_time + audio_clips_durations[i]})",
+                        x="(main_w-overlay_w)/2",
+                        y="(main_h-overlay_h)/2",
+                    )
+                    current_time += audio_clips_durations[i]
+            else:
+                for i in track(range(0, number_of_clips + 1), "Collecting the image files..."):
+                    # Create a transparent image for other clips
+                    transparent_image = Image.new('RGBA', (screenshot_width, screenshot_width), (0, 0, 0, 0))
+                    transparent_image.save(f"assets/temp/{reddit_id}/png/trs{i}.png")
+
+                    image_clips.append(
+                        ffmpeg.input(f"assets/temp/{reddit_id}/png/trs{i}.png")["v"].filter(
+                            "scale", screenshot_width, -1
+                        )
+                    )
+                    background_clip = background_clip.overlay(
+                        image_clips[i],
+                        enable=f"between(t,{current_time},{current_time + audio_clips_durations[i]})",
+                        x="(main_w-overlay_w)/2",
+                        y="(main_h-overlay_h)/2",
+                    )
+                    current_time += audio_clips_durations[i]
     else:
         for i in range(0, number_of_clips + 1):
             image_clips.append(

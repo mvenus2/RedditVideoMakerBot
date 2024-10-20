@@ -248,3 +248,4 @@ config.toml
 *.exe
 api_keys.json
 execution_count.txt
+video_creation/vosk*

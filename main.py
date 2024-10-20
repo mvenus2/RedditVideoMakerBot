@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import math
+import os
 import sys
 from os import name
 from pathlib import Path
@@ -25,6 +26,7 @@ from video_creation.background import (
 from video_creation.final_video import make_final_video
 from video_creation.screenshot_downloader import get_screenshots_of_reddit_posts
 from video_creation.voices import save_text_to_mp3
+from video_creation.captionGen import main as caption_main
 
 __VERSION__ = "3.3.0"
 
@@ -66,9 +68,25 @@ def main(POST_ID=None) -> None:
     download_background_video(bg_config["video"])
     download_background_audio(bg_config["audio"])
     chop_background(bg_config, length, reddit_object)
-    make_final_video(number_of_comments, length, reddit_object, bg_config)
+    final_video_path = make_final_video(number_of_comments, length, reddit_object, bg_config)
+    if (settings.config["settings"]["storymodemethod_cap_cut"] == True) and (settings.config["settings"]["storymode"] == True) and (settings.config["settings"]["storymodemethod"] == 1):
+        print_step("Running Cap Cut text generation..")
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(script_dir, "fonts", "Rubik-Black.ttf")
+        tmp_dir = os.path.join(script_dir, "assets", "temp")
+        # Define the output path
+        output_video_path = final_video_path
+        
+        # Rename the original file
+        original_video_path = os.path.join(os.path.dirname(final_video_path), "original_" + os.path.basename(final_video_path))
+        os.rename(final_video_path, original_video_path)
+        
+        # Call caption_main with the new paths
+        caption_main(original_video_path, output_video_path, font_path, tmp_dir)
 
-
+        # Delete the original video file after processing
+        os.remove(original_video_path)
+    print_step("Done! 🎉 The video is in the results folder 📁")
 
 def run_many(times) -> None:
     for x in range(1, times + 1):
