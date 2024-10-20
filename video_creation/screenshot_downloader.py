@@ -239,6 +239,10 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                 try:
                     if settings.config["settings"]["zoom"] != 1:
                        if settings.config["settings"]["zoom"] != 1:
+                        time.sleep(1)
+                        if page.locator("button[aria-controls=\"comment-children\"]").first.count() > 0:
+                            page.locator("button[aria-controls=\"comment-children\"]").first.click()
+                        
                         # Store zoom settings
                         zoom = settings.config["settings"]["zoom"]
 
@@ -264,6 +268,7 @@ def get_screenshots_of_reddit_posts(reddit_object: dict, screenshot_num: int):
                             #location['height'] = 200
 
                             # Take a screenshot of the parent element with the adjusted height
+
                             page.screenshot(
                                 clip=location,
                                 path=f"assets/temp/{reddit_id}/png/comment_{idx}.png",
