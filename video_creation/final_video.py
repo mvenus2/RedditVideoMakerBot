@@ -239,7 +239,8 @@ def make_final_video(
     print_step("Rendering the video 🎥")
 
     # Render the main video
-    default_path = f"results/{subreddit}"
+    default_path = os.path.join('..', 'results', 'tiktok', subreddit)
+    os.makedirs(default_path, exist_ok=True)
     video_path = os.path.join(default_path, f"{filename}.mp4")
     render_video(background_clip, final_audio, video_path, length)
 
