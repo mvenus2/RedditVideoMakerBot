@@ -77,7 +77,7 @@ def get_submission(reddit, subreddit, post_id):
         return reddit.submission(id=settings.config["reddit"]["thread"]["post_id"])
 
     if settings.config["ai"]["ai_similarity_enabled"]:
-        threads = subreddit.hot(limit=50)
+        threads = subreddit.top(time_filter="month")
         keywords = [
             keyword.strip()
             for keyword in settings.config["ai"]["ai_similarity_keywords"].split(",")
@@ -90,7 +90,7 @@ def get_submission(reddit, subreddit, post_id):
             threads, subreddit, similarity_scores=similarity_scores
         )
 
-    threads = subreddit.hot(limit=25)
+    threads = subreddit.top(time_filter="month")
     return get_subreddit_undone(threads, subreddit)
 
 
