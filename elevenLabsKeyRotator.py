@@ -39,7 +39,7 @@ class APIKeyRotator:
 
         # Find an available key
         for key, info in self.api_keys.items():
-            if info['retired_date'] is None and info['uses'] < 10:
+            if info['retired_date'] is None and info['uses'] < 8:
                 return key
 
         raise Exception("No available API keys found!")
@@ -69,7 +69,7 @@ class APIKeyRotator:
             self.api_keys[current_key]['uses'] += 1
 
             # Check if the current key needs to be rotated
-            if self.api_keys[current_key]['uses'] >= 10:
+            if self.api_keys[current_key]['uses'] >= 8:
                 # Retire the current key
                 self.api_keys[current_key]['retired_date'] = datetime.now().isoformat()
 
