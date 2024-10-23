@@ -231,6 +231,15 @@ def make_final_video(
     # Create thumbnail
     create_thumbnail_image(reddit_id, reddit_obj, subreddit)
 
+    # Speed factor (e.g., 2.0 for double speed)
+    speed_factor = 1.2
+
+    # Adjust video speed
+    background_clip = background_clip.filter('setpts', f'{1/speed_factor}*PTS')
+
+    # Adjust audio speed
+    final_audio = final_audio.filter('atempo', speed_factor)
+
     # Add background credit
     background_clip = add_background_credit(background_clip, background_config)
 
