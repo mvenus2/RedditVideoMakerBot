@@ -1,19 +1,34 @@
 {
     "__comment": "Supported Backgrounds Audio. Can add/remove background audio here...",
-    "lofi": [
-        "https://www.youtube.com/watch?v=LTphVIore3A",
-        "lofi.mp3",
-        "Super Lofi World"
-    ],
     "lofi-2":[
-        "https://www.youtube.com/watch?v=BEXL80LS0-I",
+        "https://youtube.com/watch?v=uf0tANzN_lM",
         "lofi-2.mp3",
         "stompsPlaylist"
     ],
-    "chill-summer":[
-        "https://www.youtube.com/watch?v=EZE8JagnBI8",
-        "chill-summer.mp3",
-        "Mellow Vibes Radio"
+    "lofi-3":[
+        "https://www.youtube.com/watch?v=GNCtaWIhdvM&list=PLfP6i5T0-DkIMLNRwmJpRBs4PJvxfgwBg&index=2",
+        "lofi-3.mp3",
+        "Alex Productions"
+    ],
+    "lofi-4":[
+        "https://www.youtube.com/watch?v=dfrgjD-_hE4&list=PLfP6i5T0-DkIMLNRwmJpRBs4PJvxfgwBg&index=3",
+        "lofi-4.mp3",
+        "Alex Productions"
+    ],
+    "lofi-5":[
+        "https://www.youtube.com/watch?v=GXYN8kATnVA&list=PLfP6i5T0-DkIMLNRwmJpRBs4PJvxfgwBg&index=4",
+        "lofi-5.mp3",
+        "Alex Productions"
+    ],
+    "lofi-6":[
+        "https://www.youtube.com/watch?v=VYilk1cum40",
+        "lofi-6.mp3",
+        "Super Lofi World"
+    ],
+    "lofi-7":[
+        "https://www.youtube.com/watch?v=uf0tANzN_lM",
+        "lofi-7.mp3",
+        "Super Lofi World"
     ]
 }
 

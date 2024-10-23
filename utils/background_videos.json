@@ -1,63 +1,45 @@
 {
     "__comment": "Supported Backgrounds. Can add/remove background video here...",
-    "motor-gta": [
-        "https://www.youtube.com/watch?v=vw5L4xCPy9Q",
-        "bike-parkour-gta.mp4",
-        "Achy Gaming",
+    "minecraft-parkour": [
+        "https://www.youtube.com/watch?v=G0WXGGtqQj4",
+        "Minecraft_Parkour_Gameplay.mp4",
+        "Orbital - No Copyright Gameplay",
+        "center"
+    ],
+    "valorant": [
+        "https://www.youtube.com/watch?v=Yuzl_DMSvhk",
+        "Valorant.mp4",
+        "Battys Free Footage",
+        "center"
+    ],
+    "bedwars": [
+        "https://www.youtube.com/watch?v=HZzr0C4qWhI",
+        "Bedwars.mp4",
+        "Bazen",
+        "center"
+    ],
+    "fortnite": [
+        "https://www.youtube.com/watch?v=ruSB3iSRWeo",
+        "fortnite.mp4",
+        "Battys Free Footage",
         "center"
     ],
     "rocket-league": [
-        "https://www.youtube.com/watch?v=2X9QGY__0II",
+        "https://www.youtube.com/watch?v=DtcI0M8CwRM",
         "rocket_league.mp4",
-        "Orbital Gameplay",
+        "No Copyright Gameplay Uddip",
         "center"
     ],
-    "minecraft": [
-        "https://www.youtube.com/watch?v=n_Dv4JMiwK8",
-        "parkour.mp4",
-        "bbswitzer",
+    "gta-ramp": [
+        "https://www.youtube.com/watch?v=leJ4yOTAki0",
+        "gta_ramp.mp4",
+        "Dope Gameplays",
         "center"
     ],
-    "gta": [
-        "https://www.youtube.com/watch?v=qGa9kWREOnE",
-        "gta-stunt-race.mp4",
-        "Achy Gaming",
-        "center"
-    ],
-    "csgo-surf": [
-        "https://www.youtube.com/watch?v=E-8JlyO59Io",
-        "csgo-surf.mp4",
-        "Aki",
-        "center"
-    ],
-    "cluster-truck": [
-        "https://www.youtube.com/watch?v=uVKxtdMgJVU",
-        "cluster_truck.mp4",
-        "No Copyright Gameplay",
-        "center"
-    ],
-    "minecraft-2": [
-        "https://www.youtube.com/watch?v=Pt5_GSKIWQM",
-        "minecraft-2.mp4",
-        "Itslpsn",
-        "center"
-    ],
-    "multiversus": [
-        "https://www.youtube.com/watch?v=66oK1Mktz6g",
-        "multiversus.mp4",
-        "MKIceAndFire",
-        "center"
-    ],
-    "fall-guys": [
-        "https://www.youtube.com/watch?v=oGSsgACIc6Q",
-        "fall-guys.mp4",
-        "Throneful",
-        "center"
-    ],
-    "steep": [
-        "https://www.youtube.com/watch?v=EnGiQrWBrko",
-        "steep.mp4",
-        "joel",
+    "gta-spiral": [
+        "https://www.youtube.com/watch?v=nS_S6LmdgBw",
+        "gta_spiral.mp4",
+        "Dope Gameplays",
         "center"
     ],
     "satisfying": [
